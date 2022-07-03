@@ -1,0 +1,19 @@
+{% extends "padre.html" %}
+{% block title %}Ajustes de Usuario{%endblock %}
+{%load static %}
+
+{% block contenido%}
+
+    <br/><br/>
+
+    {{ user.profile.bio }}
+    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary">Update Profile</button>
+    </form>
+ 
+
+{% endblock %}

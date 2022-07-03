@@ -1,0 +1,21 @@
+{% extends "padre.html" %}
+{% block title %}{{page_user}}{%endblock %}
+{%load static %}
+
+{% block contenido%}
+{% if request.user.is_authenticated %}
+<br>
+<img src="{{user.profile.profile_pic.url}}" width="200" height="200">
+<hr>
+<small><h5>{{user.first_name}} {{user.last_name}}</h5></small>
+<a href="{{user.profile.website_url}}">Pagina Web<a>
+<hr>
+<small><h>Bio: {{user.profile.bio}}</h></small>
+<hr>
+<a type="button" class="btn btn-outline-primary" href="{% url 'edit_profile_page' user.profile.id %}">Editar Perfil</a>
+<hr>
+{% else %}
+    <h5>No tienes autorización para estar aqui</h5>
+{% endif %}
+
+{% endblock %}

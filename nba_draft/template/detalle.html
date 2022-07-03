@@ -1,0 +1,47 @@
+{% extends "padre.html" %}
+{% block title %}{{post.titulo}}{%endblock %}
+{%load static %}
+
+{% block contenido%}
+<small><h>By: {{post.autor}} - {{post.fecha_publicacion}}</h></small>
+<br/>
+<br>
+{% if request.user.is_authenticated %}
+    <a type="button" class="btn btn-outline-primary" href="{% url 'update_post' post.pk %}">Actualizar</a>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+    <a type="button" class="btn btn-outline-danger" href="{% url 'delete_post' post.pk %}">Eliminar</a>
+    {% endif %}
+<br>
+<br>
+<small><h6>{{post.descripcion}}</h6></small>
+<hr>
+<img src="{{post.imagen_referencial.url}}" width="600" height="600">
+<br><br>
+<br/>{{post.contenido|safe}}<br/><br/>
+<a class="btn btn-primary" href="{% url 'lista' %}">Regresar a entradas</a>
+<hr>
+<h4>Commentarios...</h4>
+
+
+{%if not post.comments.all %}
+    No hay comentarios aun... <a href = "{% url 'add_comment' post.pk %}">Agregue uno!</a>
+
+{% else %}
+<a href = "{% url 'add_comment' post.pk %}">Agregar Comentario</a>
+<br><br>
+    {% for comment in post.comments.all %}
+        <strong>{{comment.name}} - {{comment.date_added}}</strong>
+        <br/>
+        <small>{{comment.body}}</small>
+        <br/><br/>
+        <hr>
+    {% endfor %}
+    <br><br>
+    <a href = "{% url 'add_comment' post.pk %}">Agregar Comentario</a>
+    <br><br>
+{% endif %}
+
+
+
+{% endblock %}
